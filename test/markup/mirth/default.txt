@@ -1,0 +1,6 @@
+module(test.main)
+
+import(std.prelude)
+
+def(main, +World -- +World,
+  "Hello, World!" print-ln!)
