@@ -11,131 +11,52 @@ export default function(hljs) {
 	const MIRTH_LINE_COMMENT_MODE = hljs.COMMENT('#', '$');
 	const MIRTH_DOC_COMMENT_MODE = hljs.COMMENT('\\|\\|\\|', '$');
 
-	const NUMBERS = {
+	const NUMBER = {
 		className: 'number',
 		variants: [
 			{ begin: /[+-]?([0-9]+)/ },
-			{ begin: /[+-]?(0[xX][a-fA-F0-9]+)/ }
+			{ begin: /[+-]?(0[xX][a-fA-F0-9]+)/ },
 		],
 		relevance: 0
 	};
 
-	const WORD = {
-		className: 'identifier',
-		variants: [
-			{ begin: /[\-a-z0-9_\!\?\/]+/, end: /( |\()/ },
-		],
-
-		illegal: [ "keyword" ],
-	};
-
-	const KEYWORDS = [
-		"def",
-		"def-type",
-		"def-external",
-
-		"module",
-		"import",
-
-		"data",
-		"table",
-		"field",	
-	];
-
 	const TYPE = {
 		className: 'type',
-		variants: [
-			{ begin: /\*?([a-z]+)/ },
-			{ begin: /[A-Z]([a-zA-Z0-9_\-]*)/ },
-			{ begin: /\+[A-Z]([a-zA-Z0-9_\-]*)/ },
-		],
-
-		contains: [
-			{ begin: '\\(', end: '\\)', contains: [ "self" ] }
-		],
+		variants: [ { begin: /[A-Z][0-9a-zA-Z_\-?+*~!\@\$%\^&=/\|<>']*/ } ]
 	};
 
-	const MODULE = {
-		className: 'module',
-		begin: ['module', '\\(' ],
-		beginScope: {1: "keyword" },
-		end: '\\)',
-
-		contains: [{ begin: '[a-zA-Z\.\-]' }],
-
-		illegal: [ "keyword" ]
-	};
-
-	const IMPORT = {
-		className: 'module',
-		begin: ['import', '\\(' ],
-		beginScope: {1: "keyword" },
-		end: '\\)',
-
-		contains: [{ begin: '[a-zA-Z\.\-]' }],
-
-		illegal: [ "keyword" ]
-	};	
-
-	const TYPE_DEFINITION = {
+	const TAG = {
 		className: 'type',
-		begin: ['def-type', '\\(' ],
-		beginScope: {1: "keyword" },
-		end: '\\)',
-
-		contains: [
-			TYPE
-		]
+		variants: [ { begin: /[\?!\+][A-Z][0-9a-zA-Z_\-?+*~!\@\$%\^&=/\|<>']*/ } ]
 	};
 
-	const DEFINITION = {
-		className: 'function',
-		begin: ['def', '\\('],
-		beginScope: { 1: "keyword" },
-		end: '\\)',
+	const KEYWORDS = {
+		keyword: [
+		"module", "import", "inline", "alias", "data", "struct", "def", "def-type", "def-missing", "def-external", "external", "table", "field", "embed-str", "buffer", "var", "--",
+		"->", "\\\\",
 
-		contains: [
-			hljs.QUOTE_STRING_MODE,
-			{ begin: /\-\-/ },
-			WORD,	
-			TYPE,
-			NUMBERS,
+		"dup", "drop", "id", "swap", "dip", "nip", "tuck", "over", "rotl", "rotr", "par", "both",
+		"dup2", "drop2", "swap2", "dip2", "nip2", "tuck2", "over2",
+		"dup3", "drop3",
+		"if", "and", "or", "not", "xor", "while",
+		"pack2", "unpack2", "pack0", "unpack0", "pack1", "unpack1", "pack3", "unpack3", "pack4", "unpack4"],
+
+		literal: [
+		"False", "True"
 		]
 	};
-
-	const EXTERN_DEFINITION = {
-		className: 'function',
-		begin: ['def-extern', '\\('],
-		beginScope: { 1: "keyword" },
-		end: '\\)',
-
-		contains: [
-			{ begin: /\-\-/ },
-			WORD,	
-			TYPE,
-		]
-	}
 	
 	return {
 		name: "mirth",
 		aliases: ['mth'],
-		keywords: { 
-		        keyword: KEYWORDS,
-			literal: ['F', 'T']
-		},
-		contains: [].concat(
+		keywords: KEYWORDS,
+		contains: [ 
 			hljs.QUOTE_STRING_MODE,
 			MIRTH_LINE_COMMENT_MODE,
 			MIRTH_DOC_COMMENT_MODE,
-			DEFINITION,
-			TYPE_DEFINITION,
-			EXTERN_DEFINITION,
-			IMPORT,
-			MODULE
-		),
-
-		exports: {
-			keywords: KEYWORDS
-		}
+			NUMBER,
+			TYPE,
+			TAG
+		]
 	};
 }
