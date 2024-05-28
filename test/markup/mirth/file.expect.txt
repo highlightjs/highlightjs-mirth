@@ -1,0 +1,20 @@
+<span class="hljs-keyword">module</span>(std.file)
+
+<span class="hljs-keyword">import</span>(std.prelude)
+<span class="hljs-keyword">import</span>(std.path)
+<span class="hljs-keyword">import</span>(std.str)
+<span class="hljs-keyword">import</span>(std.world)
+<span class="hljs-keyword">import</span>(std.input)
+<span class="hljs-keyword">import</span>(std.output)
+<span class="hljs-keyword">import</span>(std.posix)
+<span class="hljs-keyword">import</span>(std.ctypes)
+
+<span class="hljs-keyword">struct</span> <span class="hljs-type">+File</span> {
+    file-descriptor: <span class="hljs-type">Int</span>
+    owned: <span class="hljs-type">Bool</span>
+}
+
+<span class="hljs-keyword">data</span>(<span class="hljs-type">+File?</span>, <span class="hljs-type">+FileOk</span> -&gt; <span class="hljs-type">+File</span>, <span class="hljs-type">+FileErr</span> -&gt; <span class="hljs-type">Str</span>)
+<span class="hljs-keyword">def</span>(<span class="hljs-type">+File?</span>.unwrap!, <span class="hljs-type">+File?</span> -- <span class="hljs-type">+File</span>,
+    <span class="hljs-type">+FileOk</span> -&gt; <span class="hljs-keyword">id</span>,
+    <span class="hljs-type">+FileErr</span> -&gt; panic!)

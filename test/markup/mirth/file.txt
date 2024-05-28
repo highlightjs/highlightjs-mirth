@@ -1,0 +1,20 @@
+module(std.file)
+
+import(std.prelude)
+import(std.path)
+import(std.str)
+import(std.world)
+import(std.input)
+import(std.output)
+import(std.posix)
+import(std.ctypes)
+
+struct +File {
+    file-descriptor: Int
+    owned: Bool
+}
+
+data(+File?, +FileOk -> +File, +FileErr -> Str)
+def(+File?.unwrap!, +File? -- +File,
+    +FileOk -> id,
+    +FileErr -> panic!)
