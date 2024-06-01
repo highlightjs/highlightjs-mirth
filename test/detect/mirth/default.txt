@@ -1,7 +1,8 @@
 module(test.main)
 
 import(std.prelude)
+import(std.world)
 
-def(main, +World -- +World,
-  "Hello, World!" print-ln!
-)
+def main [ +World -- +World ] {
+  print("Hello, World!";)
+}
