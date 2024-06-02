@@ -1,6 +1,6 @@
 /*
 Language: mirth 
-Category: common
+Category: Functional
 Author: Sierra <sierra@casuallyblue.dev>
 Description: a strongly-typed concatenative programming language
 Website: https://github.com/mirth-lang/mirth
